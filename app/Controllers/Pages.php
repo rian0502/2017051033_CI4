@@ -10,28 +10,16 @@ class Pages extends BaseController
     {
         //
         $data = ["title"=>"Pages"];
-        return 
-        view('templates/header', $data)
-        .view('templates/navbar',$data)
-        .view('pages/index', $data)
-        .view('templates/footer');
+        return  view('pages/pages', $data);
     }
 
     public function home(){
         $data = ["title"=>"Home"];
-        return 
-        view('templates/header', $data)
-        .view('templates/navbar',$data)
-        .view('pages/home', $data)
-        .view('templates/footer');        
+        return  view('pages/home', $data);      
     }
     public function about(){
         $data = ["title"=>"About"];
-        return 
-        view('templates/header', $data)
-        .view('templates/navbar',$data)
-        .view('pages/about', $data)
-        .view('templates/footer');
+        return view('pages/about', $data);
     }
 }
 ?>
