@@ -12,7 +12,6 @@ class Pages extends BaseController
         $data = ["title"=>"Pages"];
         return  view('pages/pages', $data);
     }
-
     public function home(){
         $data = ["title"=>"Home"];
         return  view('pages/home', $data);      

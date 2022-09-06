@@ -38,6 +38,10 @@ $routes->set404Override();
 $routes->get('/', 'Pages::home');
 $routes->get('/pages','Pages::index');
 $routes->get('/about','Pages::about');
+$routes->get('/books','Books::index');
+$routes->get('/mahasiswas','MahasiswaController::index');
+$routes->get('/mahasiswas/detail/(:npm)','MahasiswaController::detail/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
