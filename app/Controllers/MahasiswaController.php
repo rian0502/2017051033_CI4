@@ -27,8 +27,10 @@ class MahasiswaController extends BaseController
 
 
     public function create(){
+        session();
         $data = [
             "title" => "Mahasiswa",
+            'validation' => \Config\Services::validation()
         ];
         return view("mahasiswa/create",$data);
     }
@@ -39,21 +41,41 @@ class MahasiswaController extends BaseController
             "nama" => $this->request->getPost("nama"),
             "alamat" => $this->request->getPost("alamat"),
         ];
+        if(!$this->validate([
+            "NPM" => "required|is_unique[mahasiswas.NPM]",
+            "nama" => "required|min_length[1]|",
+            "alamat" => "required|min_length[1]",
+        ])){
+            $validation = \Config\Services::validation();
+            return redirect()->to('/mahasiswas/create')->withInput()->with('validation',$validation);
+        }
+
+
         (new Mahasiswa())->insert($data);
-        return redirect()->to("/mahasiswas")->with("success","Data berhasil ditambahkan");
+        return redirect()->to("/mahasiswas")->withInput()->with("success","Data berhasil ditambahkan");
     }
 
     public function edit($npm){
+        session();
         $data = [
             "title" => "Mahasiswa",
-            "mahasiswa" => (new Mahasiswa())->where(["NPM" => $npm])->first()
+            "mahasiswa" => (new Mahasiswa())->where(["NPM" => $npm])->first(),
+            "validation" => \Config\Services::validation()
         ];
         return view("mahasiswa/update", $data);
     }
 
     public function update(){
+
+        if(!$this->validate([
+            "nama" => "required|min_length[1]",
+            "alamat" => "required|min_length[1]",
+        ])){
+            $validation = \Config\Services::validation();
+            return redirect()->to('/mahasiswas/edit/'.$this->request->getPost('NPM'))->withInput()->with('validation',$validation);
+        }
+
         $data = [
-            "NPM" => $this->request->getPost("NPM"),
             "nama" => $this->request->getPost("nama"),
             "alamat" => $this->request->getPost("alamat"),
         ];

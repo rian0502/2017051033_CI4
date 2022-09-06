@@ -11,17 +11,24 @@
         <?= csrf_field(); ?>
         <div class="mb-3">
             <label for="npm" class="form-label">NPM</label>
-            <input type="number" readonly class="form-control" id="npm" name="NPM" value="<?= $mahasiswa['NPM'] ?>">
+            <input type="number" readonly class="form-control <?= ($validation->hasError('NPM')) ? 'is-invalid' : '' ;?>" id="npm" name="NPM" value="<?= $mahasiswa['NPM'] ?>">
+            <div class="invalid-feedback">
+                <?= $validation->getError('NPM') ?>
+            </div>
         </div>
         <div class="mb-3">
             <label for="nama" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="nama" name="nama" value="<?= $mahasiswa['nama'] ?>">
+            <input type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : '' ;?>" id="nama" name="nama" value="<?= $mahasiswa['nama'] ?>">
+            <div class="invalid-feedback">
+                <?= $validation->getError('nama') ?>
+            </div>
         </div>
         <div class="mb-3">
             <label for="alamat" class="form-label">Alamat</label>
             <input type="textArea" class="form-control" id="alamat" name="alamat" value="<?= $mahasiswa['alamat'] ?>">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-danger" href="<?= base_url();?>/mahasiswas">Back</a>
     </form>
 </div>
 
