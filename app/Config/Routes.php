@@ -40,7 +40,15 @@ $routes->get('/pages','Pages::index');
 $routes->get('/about','Pages::about');
 $routes->get('/books','Books::index');
 $routes->get('/mahasiswas','MahasiswaController::index');
-$routes->get('/mahasiswas/detail/(:npm)','MahasiswaController::detail/$1');
+$routes->get('/mahasiswas/create','MahasiswaController::create');
+$routes->get('/mahasiswas/edit/(:any)','MahasiswaController::edit/$1');
+$routes->get('/mahasiswas/(:segment)','MahasiswaController::detail/$1');
+$routes->get('/mahasiswas/delete/(:segment)','MahasiswaController::delete/$1');
+
+$routes->post('/mahasiswa/store','MahasiswaController::store');
+$routes->post('/mahasiswa/update','MahasiswaController::update');
+
+
 
 /*
  * --------------------------------------------------------------------

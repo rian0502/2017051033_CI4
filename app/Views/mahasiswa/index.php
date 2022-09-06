@@ -6,10 +6,18 @@
     <div class="col-md-8 mb-5 mt-5">
         <h1>Daftar Mahasiswa</h1>
     </div>
+
+    <?php
+    if (session()->getFlashdata("success")) {
+        echo '<div class="col-md-8 mb-5 mt-5"> <div class="alert alert-success alert-dismissible fade show" role="alert">' . session()->getFlashdata("success") .
+            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div></div>';
+    } else if (session()->getFlashdata("error")) {
+        echo '<div class="col-md-8 mb-5 mt-5"> <div class="alert alert-success alert-dismissible fade show" role="alert">' . session()->getFlashdata("error") .
+            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div></div>';
+    }
+    ?>
     <div class="col-md-8 mb-2">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Tambah Mahasiswa
-        </button>
+        <a href="/mahasiswas/create/" class="btn btn-success">Tambah Mahasiswa</a>
     </div>
     <div class="col-md-8">
         <table class="table table-striped">
@@ -31,9 +39,9 @@
                         <td><?= $mahasiswa["nama"]; ?></td>
                         <td><?= $mahasiswa["alamat"]; ?></td>
                         <td>
-                            <a href="/mahasiswas/detail/<?= $mahasiswa["NPM"] ?>" class="btn btn-primary">View</a>
+                            <a href="/mahasiswas/<?= $mahasiswa["NPM"]; ?>" class="btn btn-primary">Detail</a>
                             <a href="/mahasiswas/edit/<?= $mahasiswa["NPM"] ?>" class="btn btn-warning">Edit</a>
-                            <a href="/mahasiswas/hapus/<?= $mahasiswa["NPM"] ?>" class="btn btn-danger">Hapus</a>
+                            <a href="/mahasiswas/delete/<?= $mahasiswa["NPM"] ?>" class="btn btn-danger">Hapus</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -43,35 +51,4 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Tambah Mahasiswa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="npm" class="form-label">NPM</label>
-                        <input type="number" class="form-control" id="npm" aria-describedby="emailHelp" name="npm">
-                    </div>
-                    <div class="mb-3">
-                        <label for="nama" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="nama" name="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" id="alamat" name="alamat">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Tambah Mahasiswa</button>
-            </div>
-        </div>
-    </div>
-</div>
 <?= $this->endSection(); ?>

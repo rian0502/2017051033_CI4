@@ -16,13 +16,53 @@ class MahasiswaController extends BaseController
         ];           
         return view("mahasiswa/index", $data);
     }
-    public function detail($npm)
-    {
+
+    public function detail($npm){
         $data = [
-            "title" => "Detail Mahasiswa",
-            "mahasiswa" => (new Mahasiswa())->find($npm)
+            "title" => "Mahasiswa",
+            "mahasiswa" => (new Mahasiswa())->where(["NPM" => $npm])->first()
         ];
-        return $npm;
         return view("mahasiswa/detail", $data);
+    }
+
+
+    public function create(){
+        $data = [
+            "title" => "Mahasiswa",
+        ];
+        return view("mahasiswa/create",$data);
+    }
+
+    public function store(){
+        $data = [
+            "NPM" => $this->request->getPost("NPM"),
+            "nama" => $this->request->getPost("nama"),
+            "alamat" => $this->request->getPost("alamat"),
+        ];
+        (new Mahasiswa())->insert($data);
+        return redirect()->to("/mahasiswas")->with("success","Data berhasil ditambahkan");
+    }
+
+    public function edit($npm){
+        $data = [
+            "title" => "Mahasiswa",
+            "mahasiswa" => (new Mahasiswa())->where(["NPM" => $npm])->first()
+        ];
+        return view("mahasiswa/update", $data);
+    }
+
+    public function update(){
+        $data = [
+            "NPM" => $this->request->getPost("NPM"),
+            "nama" => $this->request->getPost("nama"),
+            "alamat" => $this->request->getPost("alamat"),
+        ];
+        (new Mahasiswa())->where(["NPM" => $this->request->getPost("NPM")])->set($data)->update();
+        return redirect()->to("/mahasiswas")->with("success","Data berhasil diubah");
+    }
+
+    public function delete($npm){
+        (new Mahasiswa())->where(["NPM" => $npm])->delete();
+        return redirect()->to("/mahasiswas")->with("success","Data berhasil dihapus");
     }
 }
