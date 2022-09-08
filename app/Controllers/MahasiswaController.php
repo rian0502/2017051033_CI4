@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Mahasiswa;
+use CodeIgniter\HTTP\Request;
 
 class MahasiswaController extends BaseController
 {
@@ -11,12 +12,26 @@ class MahasiswaController extends BaseController
     {
         //
         $mahasiswa = new Mahasiswa();
+        if($this->request->getVar('search')){
+            $data = [
+                "title" => "Mahasiswa",
+                "mahasiswa" => $mahasiswa->like('nama', $this->request->getVar('search'))
+                ->orLike('NPM', $this->request->getVar('search'))
+                ->paginate(10, 'mahasiswa'),
+                "pager" => $mahasiswa->pager,
+                "input" => $this->request->getVar('search')
+            ];     
+            return view('mahasiswa/index', $data);
+        }
+
         $data = [
             "title" => "Mahasiswa",
             "mahasiswa" => $mahasiswa->paginate(10,'mahasiswa'),
-            "pager" => $mahasiswa->pager
+            "pager" => $mahasiswa->pager,
+          
         ];           
         return view("mahasiswa/index", $data);
+        
     }
 
     public function detail($npm){

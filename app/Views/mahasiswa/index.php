@@ -16,8 +16,17 @@ if (session()->getFlashdata("success")) {
         '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div></div>';
 }
 ?>
+
 <div class="col-md-8 mb-2">
     <a href="/mahasiswas/create/" class="btn btn-success">Tambah Mahasiswa</a>
+</div>
+<div class="col-md-8">
+    <form action="/mahasiswas" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" name="search" class="form-control" placeholder="Cari Mahasiswa" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-success" type="submit" id="button-addon2">Cari</button>
+        </div>
+    </form>
 </div>
 <div class="col-md-8">
     <table class="table table-striped">
@@ -45,7 +54,9 @@ if (session()->getFlashdata("success")) {
             <?php endforeach; ?>
         </tbody>
     </table>
-   <?= $pager->links('mahasiswa','bootstrap_pagination'); ?>
+    <div class="col d-flex justify-content-end">
+        <?= $pager->links('mahasiswa', 'bootstrap_pagination'); ?>
+    </div>
 </div>
 
 
