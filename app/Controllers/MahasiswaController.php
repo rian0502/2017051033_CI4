@@ -10,9 +10,11 @@ class MahasiswaController extends BaseController
     public function index()
     {
         //
+        $mahasiswa = new Mahasiswa();
         $data = [
             "title" => "Mahasiswa",
-            "mahasiswa" => (new Mahasiswa())->findAll()
+            "mahasiswa" => $mahasiswa->paginate(10,'mahasiswa'),
+            "pager" => $mahasiswa->pager
         ];           
         return view("mahasiswa/index", $data);
     }
@@ -49,8 +51,8 @@ class MahasiswaController extends BaseController
             $validation = \Config\Services::validation();
             return redirect()->to('/mahasiswas/create')->withInput()->with('validation',$validation);
         }
-
-
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
         (new Mahasiswa())->insert($data);
         return redirect()->to("/mahasiswas")->withInput()->with("success","Data berhasil ditambahkan");
     }
@@ -79,6 +81,7 @@ class MahasiswaController extends BaseController
             "nama" => $this->request->getPost("nama"),
             "alamat" => $this->request->getPost("alamat"),
         ];
+        $data['updated_at'] = date('Y-m-d H:i:s');
         (new Mahasiswa())->where(["NPM" => $this->request->getPost("NPM")])->set($data)->update();
         return redirect()->to("/mahasiswas")->with("success","Data berhasil diubah");
     }

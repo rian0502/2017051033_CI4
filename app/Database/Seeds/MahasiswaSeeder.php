@@ -3,41 +3,25 @@
 
 namespace App\Database\Seeds;
 
+use App\Models\Mahasiswa;
+
 class MahasiswaSeeder extends \CodeIgniter\Database\Seeder
 {
     public function run()
     {
-        $data = [
-            [
-                'NPM' => '2107051001',
-                'nama' => 'Alex Telles',
-                'alamat' => 'Jl. Jalan No. 1',
-                'created_at' => date('Y-m-d H:i:s'),
+       $mahasiswa = new Mahasiswa();
+       $faker = \Faker\Factory::create();
+       for ($i = 0; $i < 20; $i++) {
+           $data = [
+               'nama' => $faker->name,
+               'NPM' => $faker->numberBetween(1000000000, 9999999999),
+               'alamat' => $faker->address,
+               'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'NPM' => '2017051002',
-                'nama' => 'Jane So Min',
-                'alamat' => 'Jl. Jalan No. 2',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'NPM' => '2017051003',
-                'nama' => 'Harry Maguire',
-                'alamat' => 'Jl. Jalan No. 3',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'NPM' => '2017051004',
-                'nama' => 'Bruno Fernandes',
-                'alamat' => 'Jl. Jalan No. 4',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]
-        ];
-        $this->db->table('mahasiswas')->insertBatch($data);
+
+           ];
+           $mahasiswa->insert($data);
+       }
     }
 }
 

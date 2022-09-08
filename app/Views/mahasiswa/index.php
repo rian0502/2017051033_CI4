@@ -26,7 +26,6 @@ if (session()->getFlashdata("success")) {
                 <th>No</th>
                 <th>NIM</th>
                 <th>Nama</th>
-                <th>Alamat</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -37,7 +36,6 @@ if (session()->getFlashdata("success")) {
                     <td><?= $no++; ?></td>
                     <td><?= $mahasiswa["NPM"]; ?></td>
                     <td><?= $mahasiswa["nama"]; ?></td>
-                    <td><?= $mahasiswa["alamat"]; ?></td>
                     <td>
                         <a href="/mahasiswas/<?= $mahasiswa["NPM"]; ?>" class="btn btn-primary">Detail</a>
                         <a href="/mahasiswas/edit/<?= $mahasiswa["NPM"] ?>" class="btn btn-warning">Edit</a>
@@ -47,6 +45,7 @@ if (session()->getFlashdata("success")) {
             <?php endforeach; ?>
         </tbody>
     </table>
+   <?= $pager->links('mahasiswa','bootstrap_pagination'); ?>
 </div>
 
 
