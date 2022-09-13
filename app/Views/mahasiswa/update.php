@@ -7,7 +7,7 @@
 
 <div class="col-lg-8">
 
-    <form method="POST" action="/mahasiswa/update/">
+    <form method="POST" action="/mahasiswa/update/" enctype="multipart/form-data">
         <?= csrf_field(); ?>
         <div class="mb-3">
             <label for="npm" class="form-label">NPM</label>
@@ -26,6 +26,14 @@
         <div class="mb-3">
             <label for="alamat" class="form-label">Alamat</label>
             <input type="textArea" class="form-control" id="alamat" name="alamat" value="<?= $mahasiswa['alamat'] ?>">
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Foto Mahasiswa</label>
+            <input class="form-control" type="file" id="formFile" name="image">
+            <img width="200" src="<?=base_url(); ?>/assets/images/<?= $mahasiswa['image']; ?>">
+            <div class="invalid-feedback">
+                <?= $validation->getError('image') ?>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a class="btn btn-danger" href="<?= base_url();?>/mahasiswas">Back</a>

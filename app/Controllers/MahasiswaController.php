@@ -61,8 +61,7 @@ class MahasiswaController extends BaseController
             "nama" => $this->request->getPost("nama"),
             "alamat" => $this->request->getPost("alamat"),
         ];
-        if(!$this->validate(
-            [
+        if(!$this->validate([
             "NPM" => [
                 "rules" => "required|is_unique[mahasiswas.NPM]",
                 "errors" => [
@@ -84,9 +83,7 @@ class MahasiswaController extends BaseController
                     "min_length[3]" => "Alamat minimal 5 karakter"
                 ]
             ],
-            ""
-            ]
-        )){
+        ])){
             $validation = \Config\Services::validation();
             return redirect()->to('/mahasiswas/create')->withInput()->with('validation',$validation);
         }
@@ -108,6 +105,8 @@ class MahasiswaController extends BaseController
     }
 
     public function update(){
+        $img = $this->request->getFile('image');
+        $img->move(WRITEPATH. '../public/assets/images/');
 
         if(!$this->validate([
             "nama" => "required|min_length[1]",
@@ -120,6 +119,7 @@ class MahasiswaController extends BaseController
         $data = [
             "nama" => $this->request->getPost("nama"),
             "alamat" => $this->request->getPost("alamat"),
+            "image" => $img->getName(),
         ];
         $data['updated_at'] = date('Y-m-d H:i:s');
         (new Mahasiswa())->where(["NPM" => $this->request->getPost("NPM")])->set($data)->update();
