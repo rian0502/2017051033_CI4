@@ -28,7 +28,7 @@ class MahasiswaController extends BaseController
             "title" => "Mahasiswa",
             "mahasiswa" => $mahasiswa->paginate(10,'mahasiswa'),
             "pager" => $mahasiswa->pager,
-          
+            "input" => NULL
         ];           
         return view("mahasiswa/index", $data);
         
@@ -59,9 +59,27 @@ class MahasiswaController extends BaseController
             "alamat" => $this->request->getPost("alamat"),
         ];
         if(!$this->validate([
-            "NPM" => "required|is_unique[mahasiswas.NPM]",
-            "nama" => "required|min_length[1]|",
-            "alamat" => "required|min_length[1]",
+            "NPM" => [
+                "rules" => "required|is_unique[mahasiswas.NPM]",
+                "errors" => [
+                    "required" => "NPM harus diisi",
+                    "is_unique" => "NPM sudah terdaftar"
+                ]
+            ],
+            "nama" => [
+                "rules" => "required|min_length[3]",
+                "errors" => [
+                    "required" => "Nama harus diisi",
+                    "min_length[3]" => "Nama minimal 3 karakter"
+                ]
+            ],
+            "alamat" => [
+                "rules" => "required|min_length[3]",
+                "errors" => [
+                    "required" => "Alamat harus diisi",
+                    "min_length[3]" => "Alamat minimal 5 karakter"
+                ]
+            ]
         ])){
             $validation = \Config\Services::validation();
             return redirect()->to('/mahasiswas/create')->withInput()->with('validation',$validation);

@@ -23,7 +23,7 @@ if (session()->getFlashdata("success")) {
 <div class="col-md-8">
     <form action="/mahasiswas" method="GET">
         <div class="input-group mb-3">
-            <input type="text" name="search" class="form-control" placeholder="Cari Mahasiswa" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="text" name="search" value="<?= ($input == NULL) ? "" : $input; ?>" class="form-control" placeholder="Cari Mahasiswa" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-success" type="submit" id="button-addon2">Cari</button>
         </div>
     </form>
