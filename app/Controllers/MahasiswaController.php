@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Mahasiswa;
-use CodeIgniter\HTTP\Request;
+use CodeIgniter\Files\File;
+
 
 class MahasiswaController extends BaseController
 {
@@ -53,12 +54,15 @@ class MahasiswaController extends BaseController
     }
 
     public function store(){
+        $img = $this->request->getFile('image');
+        $img->move(WRITEPATH. '../public/assets/images/');
         $data = [
             "NPM" => $this->request->getPost("NPM"),
             "nama" => $this->request->getPost("nama"),
             "alamat" => $this->request->getPost("alamat"),
         ];
-        if(!$this->validate([
+        if(!$this->validate(
+            [
             "NPM" => [
                 "rules" => "required|is_unique[mahasiswas.NPM]",
                 "errors" => [
@@ -79,15 +83,18 @@ class MahasiswaController extends BaseController
                     "required" => "Alamat harus diisi",
                     "min_length[3]" => "Alamat minimal 5 karakter"
                 ]
+            ],
+            ""
             ]
-        ])){
+        )){
             $validation = \Config\Services::validation();
             return redirect()->to('/mahasiswas/create')->withInput()->with('validation',$validation);
         }
+        $data['image'] = $img->getName();
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
         (new Mahasiswa())->insert($data);
-        return redirect()->to("/mahasiswas")->withInput()->with("success","Data berhasil ditambahkan");
+        return redirect()->to("/mahasiswas")->with("success","Data berhasil ditambahkan");
     }
 
     public function edit($npm){

@@ -28,6 +28,11 @@ class Mahasiswas extends Migration
                 'type' => 'TEXT',
                 'null' => true,
             ],
+            'image' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'null' => true,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,

@@ -19,7 +19,7 @@
                         <a class="nav-link <?= $title === "Daftar Buku" ? "active fs-5"  : "" ?>" href="<?= base_url() ?>/books">Books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= $title === "Mahasiswa" ? "active fs-5"  : "" ?>" href="<?= base_url() ?>/mahasiswas">Mahaiswa</a>
+                        <a class="nav-link <?= $title === "Mahasiswa" ? "active fs-5"  : "" ?>" href="<?= base_url() ?>/mahasiswas">Mahasiswa</a>
                     </li>
                 </ul>
             </div>

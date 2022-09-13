@@ -18,6 +18,7 @@ class Mahasiswa extends Model
         "NPM",
         "nama",
         "alamat",
+        "image",
         "created_at",
         "updated_at",
     ];
