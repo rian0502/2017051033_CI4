@@ -6,6 +6,7 @@
 </div>
 
 <div class="col-lg-8">
+    <?= $validation->getError() ?>
     <form method="POST" action="/mahasiswa/store/" enctype="multipart/form-data">
         <?= csrf_field(); ?>
         <div class="mb-3">
@@ -31,13 +32,14 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Foto Mahasiswa</label>
-            <input onchange="loadFile(event)" class="form-control" type="file" id="formFile" name="image" value="<?= old('image'); ?>">
+            <input accept="image/png, image/jpg, image/jpeg" onchange="loadFile(event)" class="form-control <?= ($validation->hasError('pasFoto')) ? 'is-invalid' : ''; ?>" type="file" id="formFile" name="pasFoto">
+
             <div class="invalid-feedback">
-                <?= $validation->getError('image') ?>
+                <?= $validation->getError('pasFoto') ?>
             </div>
         </div>
         <div class="mb-3">
-                <img width="500" id="show-image">
+                <img width="300" id="show-image">
             </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a class="btn btn-danger" href="<?= base_url(); ?>/mahasiswas">Back</a>
@@ -46,4 +48,4 @@
 
 
 
-<?= $this->endSection(); ?>
+<?= $this->endSection(); ?> 

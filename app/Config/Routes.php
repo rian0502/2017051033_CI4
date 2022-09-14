@@ -48,7 +48,8 @@ $routes->get('/mahasiswas/delete/(:segment)','MahasiswaController::delete/$1');
 $routes->post('/mahasiswa/store','MahasiswaController::store');
 $routes->post('/mahasiswa/update','MahasiswaController::update');
 
-
+$routes->get('/login','UsersController::login');
+$routes->post('/login','UsersController::authentication',['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

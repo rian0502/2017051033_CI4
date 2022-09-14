@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\Mahasiswa;
 use CodeIgniter\Files\File;
 
+use function PHPUnit\Framework\fileExists;
 
 class MahasiswaController extends BaseController
 {
@@ -54,8 +55,6 @@ class MahasiswaController extends BaseController
     }
 
     public function store(){
-        $img = $this->request->getFile('image');
-        $img->move(WRITEPATH. '../public/assets/images/');
         $data = [
             "NPM" => $this->request->getPost("NPM"),
             "nama" => $this->request->getPost("nama"),
@@ -83,10 +82,23 @@ class MahasiswaController extends BaseController
                     "min_length[3]" => "Alamat minimal 5 karakter"
                 ]
             ],
+            "pasFoto" => [
+                'rules' => 'uploaded[pasFoto]|max_size[pasFoto,1024]|is_image[pasFoto]|mime_in[pasFoto,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Pilih gambar terlebih dahulu',
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'is_image' => 'Yang anda pilih bukan gambar',
+                    'mime_in' => 'Yang anda pilih bukan gambar'
+                ]
+            ],
         ])){
             $validation = \Config\Services::validation();
-            return redirect()->to('/mahasiswas/create')->withInput()->with('validation',$validation);
+        
+            return redirect()->to('/mahasiswas/create')->withInput();
         }
+        $img = $this->request->getFile('pasFoto');
+        $img->move(WRITEPATH. '../public/assets/images/');
+
         $data['image'] = $img->getName();
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
@@ -107,7 +119,6 @@ class MahasiswaController extends BaseController
     public function update(){
         $img = $this->request->getFile('image');
         $img->move(WRITEPATH. '../public/assets/images/');
-
         if(!$this->validate([
             "nama" => "required|min_length[1]",
             "alamat" => "required|min_length[1]",
@@ -127,7 +138,8 @@ class MahasiswaController extends BaseController
     }
 
     public function delete($npm){
-        (new Mahasiswa())->where(["NPM" => $npm])->delete();
+        unlink(WRITEPATH. '../public/assets/images/'.(new Mahasiswa())->where(["NPM" => $npm])->first()['image']);
+        (new Mahasiswa())->delete($npm);
         return redirect()->to("/mahasiswas")->with("success","Data berhasil dihapus");
     }
 }

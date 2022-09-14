@@ -48,7 +48,7 @@ if (session()->getFlashdata("success")) {
                     <td>
                         <a href="/mahasiswas/<?= $mahasiswa["NPM"]; ?>" class="btn btn-primary">Detail</a>
                         <a href="/mahasiswas/edit/<?= $mahasiswa["NPM"] ?>" class="btn btn-warning">Edit</a>
-                        <a onclick="" href="/mahasiswas/delete/<?= $mahasiswa["NPM"] ?>" class="btn btn-danger">Hapus</a>
+                        <a onclick="confirm('Apakah Anda ingin Menghapus Data ini ?')" href="/mahasiswas/delete/<?= $mahasiswa["NPM"] ?>" class="btn btn-danger">Hapus</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

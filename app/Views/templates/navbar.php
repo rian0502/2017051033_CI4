@@ -22,6 +22,11 @@
                         <a class="nav-link <?= $title === "Mahasiswa" ? "active fs-5"  : "" ?>" href="<?= base_url() ?>/mahasiswas">Mahasiswa</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link <?= $title === "Login" ? "active fs-5"  : "" ?>" href="<?= base_url() ?>/login">Login</a>
+                    </li>
+                </ul>
             </div>
         </nav>
 </header>
